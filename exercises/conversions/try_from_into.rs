@@ -11,8 +11,6 @@ struct Color {
     blue: u8,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -25,19 +23,61 @@ struct Color {
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let first = u8::try_from(tuple.0);
+        let second = u8::try_from(tuple.1);
+        let third = u8::try_from(tuple.2);
+        if first.is_err() || second.is_err() || third.is_err() {
+            return Err(String::from("Unable to convert"));
+        }
+        if first.unwrap() < 0 || first.unwrap() > 255
+            || second.unwrap() < 0 || second.unwrap() > 255
+            || third.unwrap() < 0 || third.unwrap() > 255 {
+            return Err(String::from("Unable to convert"));
+        }
+        Ok(Color {red: first.unwrap(), green: second.unwrap(), blue: third.unwrap()})
+    }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: [i16; 3]) -> Result<Self, Self::Error> {
+        let first = u8::try_from(slice[0]);
+        let second = u8::try_from(slice[1]);
+        let third = u8::try_from(slice[2]);
+        if first.is_err() || second.is_err() || third.is_err() {
+            return Err(String::from("Unable to convert"));
+        }
+        if first.unwrap() < 0 || first.unwrap() > 255
+            || second.unwrap() < 0 || second.unwrap() > 255
+            || third.unwrap() < 0 || third.unwrap() > 255 {
+            return Err(String::from("Unable to convert"));
+        }
+        Ok(Color {red: first.unwrap(), green: second.unwrap(), blue: third.unwrap()})
+    }
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if (slice.len()  != 3) {
+            return Err(String::from("Unable to convert"));
+        }
+        let first = u8::try_from(slice[0]);
+        let second = u8::try_from(slice[1]);
+        let third = u8::try_from(slice[2]);
+        if first.is_err() || second.is_err() || third.is_err() {
+            return Err(String::from("Unable to convert"));
+        }
+        if first.unwrap() < 0 || first.unwrap() > 255
+            || second.unwrap() < 0 || second.unwrap() > 255
+            || third.unwrap() < 0 || third.unwrap() > 255 {
+            return Err(String::from("Unable to convert"));
+        }
+        Ok(Color {red: first.unwrap(), green: second.unwrap(), blue: third.unwrap()})
+    }
 }
 
 fn main() {
